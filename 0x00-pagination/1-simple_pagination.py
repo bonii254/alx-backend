@@ -30,9 +30,10 @@ class Server:
         """Get a page from a dataset according to the pagination paras."""
         assert type(page) == int and page > 0
         assert type(page_size) == int and page_size > 0
-        data = self.dataset()
-        indices = index_range(page, page_size)
-        return data[indices[0]:indices[1]]
+        dataset = self.dataset()
+        start_index, end_index = index_range(page, page_size)
+        return dataset[
+            start_index:end_index] if start_index < len(dataset) else []
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:

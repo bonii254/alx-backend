@@ -30,9 +30,10 @@ class Server:
         """Get a page from a dataset according to the pagination paras."""
         assert type(page) == int and page > 0
         assert type(page_size) == int and page_size > 0
-        data = self.dataset()
-        indices = index_range(page, page_size)
-        return data[indices[0]:indices[1]]
+        dataset = self.dataset()
+        start_index, end_index = index_range(page, page_size)
+        return dataset[
+            start_index:end_index] if start_index < len(dataset) else []
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """method that takes the same arguments (and defaults) as get_page and
@@ -41,7 +42,7 @@ class Server:
 
         data = self.get_page(page, page_size)
         page_size = len(data)
-        total_entries = len(self.__dataset)
+        total_entries = len(self.dataset())
         total_pages = math.ceil(total_entries / page_size if page_size else 1)
         next_page = page + 1 if page + 1 <= total_pages else None
         prev_page = page - 1 if page > 1 else None
