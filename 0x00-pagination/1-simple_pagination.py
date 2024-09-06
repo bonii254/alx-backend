@@ -1,6 +1,10 @@
+#!/usr/bin/env python3
+
 import csv
 import math
 from typing import List, Tuple
+
+"""Module for Server class."""
 
 
 class Server:
@@ -20,6 +24,7 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """Get a page from a dataset according to the pagination paras."""
         assert type(page) == int and page > 0
         assert type(page_size) == int and page_size > 0
         data = self.dataset()
